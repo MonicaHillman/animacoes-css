@@ -1,0 +1,44 @@
+.changing-text span::before {
+
+    content: 'camisetas';
+    animation: switch 8s infinite;
+}
+
+@keyframes switch {
+
+    10% {
+        content: "camisetas";
+    }
+
+    20% {
+        content: "bolsas";
+    }
+
+    30% {
+        content: "calçados";
+    }
+
+    40% {
+        content: "calças";
+    }
+
+    50% {
+        content: "casacos";
+    }
+
+    60% {
+        content: "óculos";
+    }
+
+    70% {
+        content: "camisetas";
+    }
+
+    80% {
+        content: "bolsas";
+    }
+
+    100% {
+        content: "calçados";
+    }
+}

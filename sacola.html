@@ -32,11 +32,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <select class="form-select" aria-label="Selecione um país" id="localizacao">
-                            <option selected>Localização</option>
-                            <option value="BR">Brasil</option>
-                            <option value="EUA">EUA</option>
-                        </select>
+                        <form>
+                            <div class="custom-select-container">
+                                <div class="selected-option" tabindex="0">Localização</div>
+                                <div class="options-container">
+                                    <div class="option" data-value="BR">Brasil</div>
+                                    <div class="option" data-value="EUA">EUA</div>
+                                </div>
+                            </div>
+                        </form>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Home</a>

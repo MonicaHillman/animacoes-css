@@ -4,8 +4,36 @@ import { imprimirCamisetas } from "./js/imprimirCamisetas.js";
 import { imprimirUmDeCadaCategoria } from "./js/imprimirUmDeCadaCategoria.js";
 
 
-// Chama a função para carregar os itens da sacola ao carregar a página
+const customSelectContainer = document.querySelector('.custom-select-container');
+const selectedOption = customSelectContainer.querySelector('.selected-option');
+const optionsContainer = customSelectContainer.querySelector('.options-container');
+const options = optionsContainer.querySelectorAll('.option');
 
+// Função para alternar a visibilidade das opções
+const toggleOptions = () => {
+  if (optionsContainer.classList.contains('open')) {
+    optionsContainer.classList.remove('open');
+    customSelectContainer.classList.remove('open');
+  } else {
+    optionsContainer.classList.add('open');
+    customSelectContainer.classList.add('open');
+    optionsContainer.style.height = optionsContainer.scrollHeight + 'px'; // Ajusta a altura para a altura máxima
+  }
+};
+
+// Evento de clique no seletor principal
+selectedOption.addEventListener('click', toggleOptions);
+
+// Evento de clique em cada opção
+options.forEach(option => {
+  option.addEventListener('click', (event) => {
+    selectedOption.textContent = event.target.textContent;
+    selectedOption.dataset.value = event.target.dataset.value;
+    optionsContainer.classList.remove('open');
+    customSelectContainer.classList.remove('open');
+    optionsContainer.style.height = 0; // Reseta a altura para 0 quando fechado
+  });
+});
 
 
 // Função para verificar se a página atual é /camisetas.html
@@ -53,12 +81,23 @@ function carregarProdutos(localizacao) {
     .catch((error) => console.error("Erro ao carregar o arquivo JSON:", error));
 }
 
-const localizacao = document.querySelector("#localizacao");
-localizacao.addEventListener("change", function () {
-  carregarProdutos(this.value);
-})
 
-carregarProdutos(localizacao.value);
+
+selectedOption.addEventListener("click", function () {
+  optionsContainer.classList.toggle("show");
+});
+
+options.forEach(option => {
+  option.addEventListener("click", function () {
+    const value = this.getAttribute("data-value");
+    selectedOption.textContent = this.textContent;
+    optionsContainer.classList.remove("show");
+    // Agora você pode usar o valor selecionado como desejar, por exemplo, carregar produtos
+    carregarProdutos(value);
+  });
+});
+
+carregarProdutos('BR')
 
 const sacola = JSON.parse(localStorage.getItem("sacola"));
 const quantidadeDeItensNaSacola = sacola ? sacola.length : 0;

@@ -4,12 +4,12 @@ import { removerProdutoDoLocalStorage } from "./removerProdutoDoLocalStorage.js"
 
 
 // Função para carregar os itens da sacola do localStorage
-export function carregarItensDaSacola() {
+export async function carregarItensDaSacola() {
   const sacola = JSON.parse(localStorage.getItem("sacola")) || [];
   const listaSacola = document.getElementById("sacola");
 
-  mostrarLoader(6)
-
+  // Mostra o loader
+  await mostrarLoader(6);
   sacola.forEach((item) => {
     const listItem = document.createElement("li");
     listItem.className = "item-list";

@@ -1,0 +1,72 @@
+.custom-select-container {
+    position: relative;
+    z-index: 999;
+    width: 200px;
+    cursor: pointer;
+}
+
+.selected-option {
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selected-option::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #666;
+    margin-left: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.options-container {
+    position: absolute;
+    top: 100%;
+    /* Mover o contêiner para baixo para que abra de cima para baixo */
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    /* Começa com altura zero */
+    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+    /* Adiciona transição para a altura */
+}
+
+.options-container.open {
+    opacity: 1;
+    pointer-events: auto;
+    height: auto;
+    /* Altera a altura para 'auto' quando aberto */
+}
+
+.option {
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.option:hover {
+    background-color: #f0f0f0;
+}
+
+.custom-select-container.open .selected-option::after {
+    transform: rotate(180deg);
+}

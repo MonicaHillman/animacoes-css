@@ -37,7 +37,7 @@ export function imprimirUmDeCadaCategoria(produtos) {
       row.appendChild(col);
 
       const card = document.createElement("div");
-      card.className = "card";
+      card.className = "card animated-card"; // Adicione uma classe para controlar a animação
       col.appendChild(card);
 
       const images = `
@@ -67,10 +67,9 @@ export function imprimirUmDeCadaCategoria(produtos) {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <img class="modal-imagem" src="${produto.imagens.desktop}" alt="${produto.nome
-        }">
+            <img class="modal-imagem" src="${produto.imagens.desktop}" alt="${produto.nome}">
             <div>
-            <div id="mensagem-carrinho-${produto.nome.replace(/\s+/g, "-")}"></div>
+              <div id="mensagem-carrinho-${produto.nome.replace(/\s+/g, "-")}"></div>
               <h3>${produto.nome}</h3>
               <p class="modal-description">${produto.descricao}</p>
 
@@ -106,70 +105,102 @@ export function imprimirUmDeCadaCategoria(produtos) {
 
               <p><b>Tamanho</b></p>
               <form>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadio" id="flexRadio1">
-                  <label class="form-check-label" for="flexRadio1">
-                    P
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadio" id="flexRadio2">
-                  <label class="form-check-label" for="flexRadio2">
-                    M
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadio" id="flexRadio3">
-                  <label class="form-check-label" for="flexRadio3">
-                    G
-                  </label>
-                </div>
+                <label class="radio-container">
+                  <input type="radio" name="size" value="P">
+                  <span class="checkmark"></span>
+                  <span class="radio-label">P</span>
+                </label>
+                <label class="radio-container">
+                  <input type="radio" name="size" value="M">
+                  <span class="checkmark"></span>
+                  <span class="radio-label">M</span>
+                </label>
+                <label class="radio-container">
+                  <input type="radio" name="size" value="G">
+                  <span class="checkmark"></span>
+                  <span class="radio-label">G</span>
+                </label>
               </form>
             </div>
           </div>
-    <div class="modal-footer">
+          <div class="modal-footer">
             <button type="button" class="btn botao-lilas" id="adicionar-btn-${produto.nome.replace(/\s+/g, "-")}">Adicionar à sacola</button>
             <button type="button" class="botao-favorito" id="favoritar-btn-${produto.nome.replace(/\s+/g, "-")}"><i class="bi bi-heart icon-preto"></i></button>
             </div>
-        </div>
-      `;
-
-      const modal = `
-        <div class="modal fade" id="modal${categoria}" tabindex="-1" aria-labelledby="modalLabel${categoria}" aria-hidden="true">
-          <div class="modal-dialog">
-            ${modalContent}
+            </div>
           </div>
         </div>
       `;
-
+      const modal = `
+      <div class="modal fade" id="modal${categoria}" tabindex="-1" aria-labelledby="modalLabel${categoria}" aria-hidden="true">
+        <div class="modal-dialog">
+          ${modalContent}
+        </div>
+      </div>
+    `;
       document.body.insertAdjacentHTML("beforeend", modal);
 
       const botao = document.querySelector(`#adicionar-btn-${produto.nome.replace(/\s+/g, "-")}`);
       botao.addEventListener("click", () => adicionarProduto(produto));
 
-      const botaoFavorito = document.querySelector(`#favoritar-btn-${produto.nome.replace(/\s+/g, "-")}`)
+      const botaoFavorito = document.querySelector(`#favoritar-btn-${produto.nome.replace(/\s+/g, "-")}`);
       botaoFavorito.addEventListener("click", function () {
         let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
         const index = favoritos.indexOf(produto.nome);
         if (index !== -1) {
-          favoritos.splice(index, 1)
+          favoritos.splice(index, 1);
         } else {
-          favoritos.push(produto.nome)
+          favoritos.push(produto.nome);
         }
 
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
         atualizarIconeFavorito(this, index === -1);
-      })
+      });
 
-      const mensagemDeAviso = document.querySelector(`#mensagem-carrinho-${produto.nome.replace(/\s+/g, "-")}`)
+      const mensagemDeAviso = document.querySelector(`#mensagem-carrinho-${produto.nome.replace(/\s+/g, "-")}`);
 
       if (verificarItemNoCarrinho(produto)) {
-        mensagemDeAviso.innerHTML = "<div class='alert alert-warning' role='alert'> Este item já está no seu carrinho! </div>"
+        mensagemDeAviso.innerHTML = "<div class='alert alert-warning' role='alert'> Este item já está no seu carrinho! </div>";
       }
-
     }
   }
 
-  // Adicionando o container ao corpo da página
-  row.appendChild(card);
+  checkCardVisibility();
+
+  // Função para verificar se um elemento está visível na tela
+  function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+  // Função para verificar se um elemento está dentro da seção dos cards
+  function isElementInCardSection(el) {
+    const cardSection = document.getElementById('produtos'); // Identificador da seção dos cards
+    const rect = el.getBoundingClientRect();
+    const cardSectionRect = cardSection.getBoundingClientRect();
+    return (
+      rect.top >= cardSectionRect.top &&
+      rect.bottom <= cardSectionRect.bottom
+    );
+  }
+
+  // Função para verificar a visibilidade dos cards e mostrar animação de fade-in
+  // Função para verificar a visibilidade dos cards e mostrar animação de fade-in
+  function checkCardVisibility() {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card) => {
+      if (isElementInViewport(card) && isElementInCardSection(card)) {
+        card.classList.add('fade-in'); // Adicione uma classe para controlar o efeito de fade-in
+      }
+    });
+  }
+
+
+  // Verificar visibilidade dos cards ao rolar a página
+  window.addEventListener('scroll', checkCardVisibility);
 }

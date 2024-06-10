@@ -4,9 +4,13 @@ export default function mostrarLoader(duration) {
     // Display the loader
     loaderElement.style.display = "block";
 
-    // Wait for the specified duration
-    setTimeout(() => {
-        // Hide the loader after the delay
-        loaderElement.style.display = "none";
-    }, duration * 1000);
+    // Return a promise that resolves after the specified duration
+    return new Promise((resolve) => {
+        // Wait for the specified duration
+        setTimeout(() => {
+            // Hide the loader after the delay
+            loaderElement.style.display = "none";
+            resolve(); // Resolve the promise to indicate that the loader is hidden
+        }, duration * 1000);
+    });
 }
