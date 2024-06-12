@@ -8,14 +8,21 @@ function adicionarProduto(camiseta) {
     imagens: camiseta.imagens
   });
 }
-
 function atualizarIconeFavorito(botao, favoritar) {
-  if (favoritar) {
-    botao.innerHTML = "<i class='bi bi-heart-fill icon-preto'></i>";
+  const heartFill = botao.querySelector('.botao-favorito use:last-child');
+
+  if (heartFill) {
+    if (favoritar) {
+      heartFill.classList.add('on');
+    } else {
+      heartFill.classList.remove('on');
+    }
   } else {
-    botao.innerHTML = "<i class='bi bi-heart icon-preto'></i>";
+    console.error('Classe .heart-fill não encontrada.');
   }
 }
+
+// ...rest of your JavaScript code...
 
 function verificarItemNoCarrinho(produto) {
   const sacola = JSON.parse(localStorage.getItem("sacola") || []);
@@ -125,7 +132,21 @@ export function imprimirUmDeCadaCategoria(produtos) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn botao-lilas" id="adicionar-btn-${produto.nome.replace(/\s+/g, "-")}">Adicionar à sacola</button>
-            <button type="button" class="botao-favorito" id="favoritar-btn-${produto.nome.replace(/\s+/g, "-")}"><i class="bi bi-heart icon-preto"></i></button>
+<button type="button" id="favoritar-btn-${produto.nome.replace(/\s+/g, "-")}" class="botao-favorito">
+    <svg viewBox="0 0 24 24">
+        <use xlink:href="#heart" /> 
+        <use xlink:href="#heart" /> 
+    </svg>
+
+    <svg class="hide" viewBox="0 0 24 24">
+        <defs>
+            <path id="heart" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z" />
+        </defs>
+    </svg>
+</button>
+
+
+
             </div>
             </div>
           </div>
