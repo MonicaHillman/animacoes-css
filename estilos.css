@@ -25,7 +25,7 @@ main {
 .parallax-banner {
     position: relative;
     height: 500px;
-    background: url('/assets/parallax.jpg') no-repeat center center;
+    background: url('assets/parallax.jpg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
     /* Fixa o fundo para Parallax */
