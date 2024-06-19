@@ -66,9 +66,9 @@ function carregarProdutos(localizacao) {
     produtosHTML.removeChild(produtosHTML.firstChild);
   }
 
-  let url = "/json/produtos.json";
+  let url = "/animacoes-css/json/produtos.json";
   if (localizacao === "EUA") {
-    url = "/json/products.json"
+    url = "/animacoes-css/json/products.json"
   }
 
   fetch(url)
