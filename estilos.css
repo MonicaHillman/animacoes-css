@@ -8,6 +8,43 @@
     object-fit: cover;
 }
 
+/* Estilo básico para página e seções */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+main {
+    padding: 20px;
+}
+
+/* Estilo do banner com Parallax */
+.parallax-banner {
+    position: relative;
+    height: 500px;
+    background: url('./assets/parallax.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    /* Fixa o fundo para Parallax */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.banner-content {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+
 #produtos img {
     width: 100%;
     height: 490px;
@@ -219,8 +256,11 @@ form {
     transition: all 0.3s ease-in-out;
     /* Smooth transition for the effects */
 }
+
 .bi.bi-heart,
 .bi.bi-heart-fill {
-  opacity: 1; /* Initial opacity for both icons */
-  transition: opacity 0.5s ease-in-out; /* Transition for opacity change */
+    opacity: 1;
+    /* Initial opacity for both icons */
+    transition: opacity 0.5s ease-in-out;
+    /* Transition for opacity change */
 }
