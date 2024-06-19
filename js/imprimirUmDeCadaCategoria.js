@@ -62,6 +62,37 @@ export function imprimirUmDeCadaCategoria(produtos) {
         </div>
       `;
 
+      const generateCarouselHTML = (images, name) => {
+        if (typeof images !== 'object' || Array.isArray(images)) {
+          console.error('Expected "images" to be an object, but got:', images);
+          return ''; // Return empty string or handle the error as needed
+        }
+
+        // Create an array of image URLs based on the keys 'mobile', 'tablet', 'desktop'
+        const imageUrls = [images.mobile, images.tablet, images.desktop];
+
+        return `
+          <div id="carousel${name}" class="slideshow-container">
+            ${imageUrls.map((imageUrl, index) => `
+              <div class="mySlides-${name} fade">
+                <div class="numbertext">${index + 1} / ${imageUrls.length}</div>
+                <img src="${imageUrl}" alt="Slide ${index + 1}" style="width:100%">
+                <div class="text">Caption ${index + 1}</div>
+              </div>
+            `).join('')}
+            <a class="prev" id="prev-${name}">&#10094;</a>
+            <a class="next" id="next-${name}">&#10095;</a>
+          </div>
+          <br>
+        `;
+      };
+
+
+
+      // Use it when creating the modal content
+      const carrousel = generateCarouselHTML(produto.imagens, produto.nome.replace(/\s+/g, "-"));
+
+
       card.innerHTML = images + cardBody;
 
       const modalContent = `
@@ -74,7 +105,7 @@ export function imprimirUmDeCadaCategoria(produtos) {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <img class="modal-imagem" src="${produto.imagens.desktop}" alt="${produto.nome}">
+            ${carrousel}
             <div>
               <div id="mensagem-carrinho-${produto.nome.replace(/\s+/g, "-")}"></div>
               <h3>${produto.nome}</h3>
@@ -183,8 +214,16 @@ export function imprimirUmDeCadaCategoria(produtos) {
       if (verificarItemNoCarrinho(produto)) {
         mensagemDeAviso.innerHTML = "<div class='alert alert-warning' role='alert'> Este item já está no seu carrinho! </div>";
       }
+
+
+   
     }
+
+
   }
+
+
+
 
   checkCardVisibility();
 
@@ -224,4 +263,7 @@ export function imprimirUmDeCadaCategoria(produtos) {
 
   // Verificar visibilidade dos cards ao rolar a página
   window.addEventListener('scroll', checkCardVisibility);
+
+
+
 }
