@@ -72,11 +72,23 @@ function carregarProdutos(localizacao) {
   }
 
   fetch(url)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Erro ao carregar produtos: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    })
     .then((produtosJSON) => {
+      // Verifique se o JSON é válido antes de tentar utilizá-lo
+      if (Object.keys(produtosJSON).length === 0 && produtosJSON.constructor === Object) {
+        throw new Error("O arquivo JSON está vazio ou não é um objeto JSON válido.");
+      }
+
       if (isPaginaCamisetas()) {
         separarCamisetas(produtosJSON);
-      } else imprimirUmDeCadaCategoria(produtosJSON);
+      } else {
+        imprimirUmDeCadaCategoria(produtosJSON);
+      }
     })
     .catch((error) => console.error("Erro ao carregar o arquivo JSON:", error));
 }
