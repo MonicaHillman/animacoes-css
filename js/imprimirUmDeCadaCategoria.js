@@ -105,7 +105,7 @@ export function imprimirUmDeCadaCategoria(produtos) {
       // Use it when creating the modal content
       const carrousel = generateCarouselHTML(produto.imagens, produto.nome.replace(/\s+/g, "-"));
 
-
+      console.log(carrousel)
       card.innerHTML = images + cardBody;
 
       const modalContent = `
