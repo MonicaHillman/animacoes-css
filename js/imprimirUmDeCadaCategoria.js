@@ -89,7 +89,6 @@ export function imprimirUmDeCadaCategoria(produtos) {
             ${imageUrls.map((imageUrl, index) => `
               <div class="mySlides-${name} fade">
                 <img src="${imageUrl}" alt="Slide ${index + 1}" style="width:100%">
-                <div class="text">Caption ${index + 1}</div>
               </div>
             `).join('')}
             <a class="prev" id="prev-${name}">&#10094;</a>
@@ -104,7 +103,7 @@ export function imprimirUmDeCadaCategoria(produtos) {
       // Use it when creating the modal content
       const carrousel = generateCarouselHTML(produto.imagens, produto.nome.replace(/\s+/g, "-"));
 
-      console.log(carrousel)
+
       card.innerHTML = images + cardBody;
 
       const modalContent = `
@@ -226,6 +225,21 @@ export function imprimirUmDeCadaCategoria(produtos) {
       if (verificarItemNoCarrinho(produto)) {
         mensagemDeAviso.innerHTML = "<div class='alert alert-warning' role='alert'> Este item já está no seu carrinho! </div>";
       }
+      let slideIndex = 1;
+      const showSlides = (n) => {
+        const slides = document.querySelectorAll(`.mySlides-${produto.nome.replace(/\s+/g, "-")}`);
+        if (n > slides.length) slideIndex = 1;
+        if (n < 1) slideIndex = slides.length;
+        slides.forEach(slide => slide.style.display = "none");
+        slides[slideIndex - 1].style.display = "block";
+      };
+
+      const plusSlides = (n) => showSlides(slideIndex += n);
+
+      document.getElementById(`prev-${produto.nome.replace(/\s+/g, "-")}`).onclick = () => plusSlides(-1);
+      document.getElementById(`next-${produto.nome.replace(/\s+/g, "-")}`).onclick = () => plusSlides(1);
+
+      showSlides(slideIndex);
 
 
 

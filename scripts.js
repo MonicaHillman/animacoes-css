@@ -1,5 +1,4 @@
 
-import { carregarItensDaSacola } from "./js/carregarItensDaSacola.js";
 import { imprimirCamisetas } from "./js/imprimirCamisetas.js";
 import { imprimirUmDeCadaCategoria } from "./js/imprimirUmDeCadaCategoria.js";
 
@@ -41,13 +40,7 @@ function isPaginaCamisetas() {
   return window.location.pathname.includes("/camisetas.html");
 }
 
-function isPaginaSacola() {
-  return window.location.pathname.includes("/sacola.html");
-}
 
-if (isPaginaSacola()) {
-  carregarItensDaSacola();
-}
 
 // Função para imprimir somente as camisetas
 function separarCamisetas(produtos) {
