@@ -85,10 +85,9 @@ export function imprimirUmDeCadaCategoria(produtos) {
         const imageUrls = [images.mobile, images.tablet, images.desktop];
 
         return `
-          <div id="carousel${name}" class="slideshow-container">
+          <div id="carousel-${name}" class="slideshow-container">
             ${imageUrls.map((imageUrl, index) => `
               <div class="mySlides-${name} fade">
-                <div class="numbertext">${index + 1} / ${imageUrls.length}</div>
                 <img src="${imageUrl}" alt="Slide ${index + 1}" style="width:100%">
                 <div class="text">Caption ${index + 1}</div>
               </div>

@@ -63,7 +63,7 @@ const produtosHTML = document.getElementById("produtos");
 
 function carregarProdutos(localizacao) {
 
-  if (produtosHTML.firstChild) {
+  if (produtosHTML) {
     while (produtosHTML.firstChild) {
       produtosHTML.removeChild(produtosHTML.firstChild);
     }
