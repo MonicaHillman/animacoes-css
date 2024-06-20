@@ -62,8 +62,11 @@ function separarCamisetas(produtos) {
 const produtosHTML = document.getElementById("produtos");
 
 function carregarProdutos(localizacao) {
-  while (produtosHTML.firstChild) {
-    produtosHTML.removeChild(produtosHTML.firstChild);
+
+  if (produtosHTML.firstChild) {
+    while (produtosHTML.firstChild) {
+      produtosHTML.removeChild(produtosHTML.firstChild);
+    }
   }
 
   let url = "./json/produtos.json";
