@@ -9,7 +9,7 @@ export async function carregarItensDaSacola() {
   const listaSacola = document.getElementById("sacola");
 
   // Mostra o loader
-  mostrarLoader(6);
+  await mostrarLoader(6); // Show loader for 6 seconds
   sacola.forEach((item) => {
     const listItem = document.createElement("li");
     listItem.className = "item-list";
