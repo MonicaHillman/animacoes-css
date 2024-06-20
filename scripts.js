@@ -97,7 +97,7 @@ options.forEach(option => {
   });
 });
 
-carregarProdutos('BR')
+
 
 const sacola = JSON.parse(localStorage.getItem("sacola"));
 const quantidadeDeItensNaSacola = sacola ? sacola.length : 0;
@@ -144,7 +144,10 @@ function toggleNavbarIconBackground() {
 }
 
 // Call the function on document load
-window.addEventListener('DOMContentLoaded', toggleNavbarIconBackground);
+window.addEventListener('DOMContentLoaded', () => {
+  carregarProdutos('BR');
+  toggleNavbarIconBackground
+});
 
 // Optionally, call the function whenever the aria-expanded attribute changes
 navbarToggler.addEventListener('click', toggleNavbarIconBackground);

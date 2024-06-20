@@ -25,12 +25,25 @@ function atualizarIconeFavorito(botao, favoritar) {
 // ...rest of your JavaScript code...
 
 function verificarItemNoCarrinho(produto) {
-  const sacola = JSON.parse(localStorage.getItem("sacola") || []);
+  // Get the sacola from localStorage, or initialize as an empty array if not found
+  const sacolaJSON = localStorage.getItem("sacola") || '[]';
 
-  const nomesDosItensNaSacola = sacola.map(item => item.nome);
+  try {
+    // Attempt to parse the JSON string into an array
+    const sacola = JSON.parse(sacolaJSON);
 
-  return nomesDosItensNaSacola.includes(produto.nome)
+    // Extract the names of items in sacola
+    const nomesDosItensNaSacola = sacola.map(item => item.nome);
+
+    // Check if the produto.nome exists in the array of item names
+    return nomesDosItensNaSacola.includes(produto.nome);
+  } catch (error) {
+    // Handle any parsing errors (though empty JSON input shouldn't normally throw an error)
+    console.error('Error parsing sacola JSON:', error);
+    return false; // Return false in case of error
+  }
 }
+
 
 export function imprimirUmDeCadaCategoria(produtos) {
   const row = document.querySelector("#produtos");
@@ -216,7 +229,7 @@ export function imprimirUmDeCadaCategoria(produtos) {
       }
 
 
-   
+
     }
 
 
