@@ -1,16 +1,17 @@
 export default function mostrarLoader(duration) {
-    const loaderElement = document.getElementById("loader"); // Assuming you have an element with ID "loader"
+    const loaderElement = document.getElementById("loader");
 
-    // Display the loader
+    if (!loaderElement) {
+        console.error('Loader element not found.');
+        return Promise.reject('Loader element not found.');
+    }
+
     loaderElement.style.display = "block";
 
-    // Return a promise that resolves after the specified duration
     return new Promise((resolve) => {
-        // Wait for the specified duration
         setTimeout(() => {
-            // Hide the loader after the delay
             loaderElement.style.display = "none";
-            resolve(); // Resolve the promise to indicate that the loader is hidden
+            resolve();
         }, duration * 1000);
     });
 }
